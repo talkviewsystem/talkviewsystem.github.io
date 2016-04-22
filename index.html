@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>No. Of Victims</title>
+	  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script> 
+    <link rel="stylesheet" href="pilatet-style.css">
+    <style>
+	  .tooltip{
+        position: absolute;	
+        text-align: center;	
+        width: 13%;	
+        height: 13%;		
+        padding: 2vw;	
+        font: 1.4vw sans-serif;		
+        border: 0px;					
+        border-radius: 8px;
+        color:black;
+        box-shadow: -3px 3px 15px #888888;
+        opacity:0;	
+      }
+    </style>
+  </head>  
+
+  <body>
+      <script src="http://d3js.org/d3.v3.min.js"></script>
+      <div id = "talkViewTitle">오늘의 언어습관</div>
+      <div id = "svgContent"></div>
+
+      <script>
+      var data = [{"utterNum": 211, "wordset": "짜증나 (510회)<br>"},
+                  {"utterNum": 200, "wordset": "*발 (40회) <br>*나 (30회)"},
+                  {"utterNum": 100, "wordset": "대박 (20회)<br>기분 좋다 (15회)<br>짱이다 (10회)"}];
+      var margin = {top:40,left:40,right:40,bottom:40};
+          width = 300;
+          height = 300;
+          radius = Math.min(width-100,height-100)/2;
+      var color = d3.scale.ordinal()
+        .range([ "#2E3D51", "#C0202E", "#A3D6C1"]);
+      var arc = d3.svg.arc()  
+               .outerRadius(radius -230)
+               .innerRadius(radius - 50)
+      		 .cornerRadius(20);
+      var arcOver = d3.svg.arc()  
+      .outerRadius(radius +50)
+      .innerRadius(0);
+
+      var a=width/2 - 20;
+      var b=height/2 - 90;
+      var svg = d3.select("#svgContent").append("svg")
+                .attr("viewBox", "0 0 " + width + " " + height/2)
+                .attr("preserveAspectRatio", "xMidYMid meet")
+                .append("g")
+                .attr("transform","translate("+a+","+b+")");
+
+      		div = d3.select("body")
+                .append("div") 
+                .attr("class", "tooltip");
+      var pie = d3.layout.pie()
+                .sort(null)
+                .value(function(d){return d.utterNum;})
+      		      .padAngle(.02);
+      var g = svg.selectAll(".arc")
+              .data(pie(data))
+              .enter()
+              .append("g")
+              .attr("class","arc")
+              .on("click",function(d){
+                var mouseVal = d3.mouse(this);
+              	div.style("display","none");
+              	div
+              	.html(d.data.utterNum+"회</br>----------<br>"+d.data.wordset)
+                .style("left", (d3.event.pageX+12) + "px")
+                .style("top", (d3.event.pageY-5) + "px")
+                .style("opacity", 1)
+                .style("background-color", "#ffffff")
+                .style("display","block");
+              })
+                .on("mouseout",function(){div.html(" ").style("display","none");});
+              
+              
+              
+      		g.append("path")
+      		.attr("d",arc)
+      		.style("fill",function(d){return color(d.data.utterNum);})
+      		.attr("d", arc);;
+      /*
+      		            svg.selectAll("text").data(pie(data)).enter()
+      		             .append("text")
+      		             .attr("class","label1")
+      		             .attr("transform", function(d) {
+      		      		   var dist=radius+15;
+      		    		   var winkel=(d.startAngle+d.endAngle)/2;
+      		    		   var x=dist*Math.sin(winkel)-4;
+      		    		   var y=-dist*Math.cos(winkel)-4;
+      		    		   
+      		    		   return "translate(" + x + "," + y + ")";
+      		            })
+      		            .attr("dy", "0.35em")
+      		            .attr("text-anchor", "middle")
+      		            
+      		    	    .text(function(d){
+      		    	      return d.value;
+      		    	    });
+      		    	    
+      		    	   
+      		
+      */
+      </script>
+
+
+  </body>
+</html>
