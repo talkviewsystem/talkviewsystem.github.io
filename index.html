@@ -31,7 +31,7 @@
       var data = [{"utterNum": 211, "wordset": "짜증나 (510회)<br>"},
                   {"utterNum": 200, "wordset": "*발 (40회) <br>*나 (30회)"},
                   {"utterNum": 100, "wordset": "대박 (20회)<br>기분 좋다 (15회)<br>짱이다 (10회)"}];
-      var margin = {top:20,left:20,right:20,bottom:20};
+      var margin = {top:20,left:20,right:20,bottom:-30};
           width = 280;
           height = 280;
           radius = Math.min(width-100,height-100)/2;
@@ -48,7 +48,7 @@
       var a=width/2 - 20;
       var b=height/2 - 90;
       var svg = d3.select("#svgContent").append("svg")
-                .attr("viewBox", "0 0 " + width + " " + height/2)
+                .attr("viewBox", "0 0 ")// + width + " " + height/2)
                 .attr("preserveAspectRatio", "xMidYMid meet")
                 .append("g")
                 .attr("transform","translate("+a+","+b+")");

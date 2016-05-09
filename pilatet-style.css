@@ -17,6 +17,7 @@
 	margin-right: -25%;*/
 }
 
-/*#svgContent {
+#svgContent {
 	text-align: center;
-}*/
+	height: 300px;
+}
